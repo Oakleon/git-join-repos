@@ -20,7 +20,7 @@ each row is separated by a newline and the name and url are separated by a space
 
 ## Expected Result
 
-Your new TLD working directory will contain:
+Your new top-level working directory will contain:
 
 ```
 repo1
