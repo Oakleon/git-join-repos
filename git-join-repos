@@ -28,6 +28,15 @@ name_urls="$(cat $data_file)"
 repo_name=
 repo_url=
 
+function empty_repo_or_die {
+    total="$(git count-objects -v | cut -d' ' -f2 | awk '{s+=$1}END{print s}')"
+
+    if [ "$total" -ne "0" ]; then
+        echo "This must be run in an empty git repository!"
+        exit 98
+    fi
+}
+
 function split_line {
     repo_name="${a% *}"
     repo_url="${a#* }"
@@ -42,6 +51,8 @@ function repo_master_to_subdir {
     git filter-branch -f --msg-filter "/bin/echo -n \"${repo_name}: \" && cat"
 
 }
+
+empty_repo_or_die
 
 for a in $name_urls; do
     split_line "$a"

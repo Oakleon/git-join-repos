@@ -46,3 +46,7 @@ Each commit message will be retained, but prepended with the name of the source 
 | * 02f3536 newname: update sublibrary to versionf 1.4
 ...
 ```
+
+## Contributions
+
+Pull requests are welcome
