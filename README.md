@@ -4,7 +4,7 @@ Combines separate repositories into a single monolithic repository. It only incl
 
 ## Usage
 
-Run this command from inside of an **empty** git repository - this can either be a `git clone` from github or a local `git init`.
+Run this command from inside an **empty** git repository - I recommend a local `git init $repo_name; cd $repo_name`.
 
 `git-join-repos datafile.txt`
 
@@ -46,6 +46,10 @@ Each commit message will be retained, but prepended with the name of the source 
 | * 02f3536 newname: update sublibrary to versionf 1.4
 ...
 ```
+
+## Side Effects
+
+This can mangle remote refs in the newly created repo, so afterwards you should run `git remote add origin $repo_url` where `$repo_url` is the url of the monolithic result, e.g. `git remote add origin git@github.com:username/monolithic.git`
 
 ## Contributions
 

@@ -22,9 +22,7 @@ if [ "$(uname -s)" = "Darwin" ]; then
 fi
 
 data_file="$1"
-
 name_urls="$(cat $data_file)"
-
 repo_name=
 repo_url=
 
@@ -68,6 +66,7 @@ done
 
 git checkout --orphan master
 git rm -qrf --ignore-unmatch .
+
 for a in $name_urls; do
     split_line "$a"
 
