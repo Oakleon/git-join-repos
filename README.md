@@ -4,11 +4,16 @@ Combines separate repositories into a single monolithic repository. It only incl
 
 ## Usage
 
-Run this command from inside an **empty** git repository - I recommend a local `git init $repo_name; cd $repo_name`.
+Run the script from inside an **empty** git repository, for example:
 
-`git-join-repos datafile.txt`
+```bash
+$EDITOR repo_data.txt
+git init $repo_name
+cd $repo_name
+~/path/to/git-join-repos ../repo_data.txt
+```
 
-where datafile.txt is in the format:
+where repo_data.txt is in the format:
 
 ```
 repo1 git@github.com:username/repo1.git
@@ -47,9 +52,16 @@ Each commit message will be retained, but prepended with the name of the source 
 ...
 ```
 
-## Side Effects
+## Final Steps
 
-This can mangle remote refs in the newly created repo, so afterwards you should run `git remote add origin $repo_url` where `$repo_url` is the url of the monolithic result, e.g. `git remote add origin git@github.com:username/monolithic.git`
+This can mangle remote refs in the newly created repo, so afterwards you should run `git remote add origin $repo_url` where `$repo_url` is the url of the monolithic result, e.g.
+
+```bash
+git remote add origin git@github.com:username/monolithic.git
+```
+
+finally you can:  
+`git push origin master`
 
 ## Contributions
 
