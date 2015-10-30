@@ -7,10 +7,22 @@ Combines separate git repositories into a single monolithic git repository, prep
 Run the script from inside an **empty** git repository, for example:
 
 ```bash
+#Describe the source repositories, see below for file format
 $EDITOR repo_data.txt
+
+#make an empty repository
 git init $repo_name
 cd $repo_name
+
+#Run the merge/join tool
 ~/path/to/git-join-repos ../repo_data.txt
+
+#Add the monolithic remote, this is just an example, plug in your actual remote:
+#Be sure to run this step *after* the join tool.
+git remote add origin git@github.com:username/monolithic.git
+
+#Push it when you're ready
+git push origin master
 ```
 
 where repo_data.txt is in the format:
@@ -51,17 +63,6 @@ Each commit message will be retained, but prepended with the name of the source 
 | * 02f3536 newname: update sublibrary to versionf 1.4
 ...
 ```
-
-## Final Steps
-
-This can mangle remote refs in the newly created repo, so afterwards you should run `git remote add origin $repo_url` where `$repo_url` is the url of the monolithic result, e.g.
-
-```bash
-git remote add origin git@github.com:username/monolithic.git
-```
-
-finally you can:  
-`git push origin master`
 
 ## Contributions
 
