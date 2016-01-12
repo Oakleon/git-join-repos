@@ -44,7 +44,7 @@ function repo_master_to_subdir {
     git filter-branch -f --index-filter \
         "git ls-files -s | ${sed} \"s|\t\\\"*|&${repo_name}/|\" |
         GIT_INDEX_FILE=\$GIT_INDEX_FILE.new git update-index --index-info &&
-        mv \"\$GIT_INDEX_FILE.new\" \"\$GIT_INDEX_FILE\"" HEAD
+        mv \"\$GIT_INDEX_FILE.new\" \"\$GIT_INDEX_FILE\" ||:" HEAD
 
     git filter-branch -f --msg-filter "/bin/echo -n \"${repo_name}: \" && cat"
 
