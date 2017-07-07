@@ -70,6 +70,6 @@ git rm -qrf --ignore-unmatch .
 for a in $name_urls; do
     split_line "$a"
 
-    git merge --ff -m "$repo_name: $self_name monolithic conversion merge" "$repo_name"
+    git merge --allow-unrelated-histories --ff -m "$repo_name: $self_name monolithic conversion merge" "$repo_name"
     git branch -D "$repo_name"
 done
