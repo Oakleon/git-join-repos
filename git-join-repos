@@ -25,6 +25,7 @@ data_file="$1"
 name_urls="$(cat $data_file)"
 repo_name=
 repo_url=
+repo_branch=
 
 function empty_repo_or_die {
     total="$(git count-objects -v | cut -d' ' -f2 | awk '{s+=$1}END{print s}')"
@@ -36,8 +37,10 @@ function empty_repo_or_die {
 }
 
 function split_line {
-    repo_name="${a% *}"
-    repo_url="${a#* }"
+    readarray -d" " -t parts < <(echo -n "$a")
+    repo_name="${parts[0]}"
+    repo_url="${parts[1]}"
+    repo_branch="${parts[2]:-master}"
 }
 
 function repo_master_to_subdir {
@@ -59,7 +62,7 @@ for a in $name_urls; do
     git rm -qrf --ignore-unmatch .
     git remote add "$repo_name" "$repo_url"
     git fetch "$repo_name"
-    git merge "$repo_name/master"
+    git merge "$repo_name/${repo_branch}"
     repo_master_to_subdir
     git remote remove "$repo_name"
 done
@@ -70,6 +73,6 @@ git rm -qrf --ignore-unmatch .
 for a in $name_urls; do
     split_line "$a"
 
-    git merge --allow-unrelated-histories --ff -m "$repo_name: $self_name monolithic conversion merge" "$repo_name"
+    git merge --allow-unrelated-histories --ff -m "$self_name: merge ${repo_name}[${repo_branch}]" "$repo_name"
     git branch -D "$repo_name"
 done
