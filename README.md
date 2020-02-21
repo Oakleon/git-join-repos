@@ -1,6 +1,6 @@
 # Git Repository Join
 
-Combines separate git repositories into a single monolithic git repository, prepending the source repo name to every commit message. It only includes one selectable branche from each repository (default is master), but otherwise complete version history is maintained. Mainly just a convenient bash wrapper around git commands.
+Combines separate git repositories into a single monolithic git repository, prepending the source repo name to every commit message. It only includes one selectable branch ('master' by default) from each repository, but otherwise complete version history is maintained. Mainly just a convenient bash wrapper around git commands.
 
 ## Usage
 
