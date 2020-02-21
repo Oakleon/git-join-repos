@@ -44,6 +44,7 @@ function split_line {
 }
 
 function repo_master_to_subdir {
+    git filter-branch -f --prune-empty --tag-name-filter cat -- --all
     git filter-branch -f --tag-name-filter cat --index-filter \
         "git ls-files -s | ${sed} \"s|\t\\\"*|&${repo_name}/|\" |
         GIT_INDEX_FILE=\$GIT_INDEX_FILE.new git update-index --index-info &&
