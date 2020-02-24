@@ -34,7 +34,7 @@ repo3 /path/locally/repo3
 repo4 /path/locally/repo3 custom-branch
 ```
 
-each row is separated by a newline and the name, the url and optionally a branch name are separated a space character (tabs not supported!).
+each row is separated by a newline and contains the name, the url and optionally a branch name separated by a space character (tabs not supported!).
 
 ## Expected Result
 
