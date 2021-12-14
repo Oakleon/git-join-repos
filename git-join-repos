@@ -7,7 +7,9 @@ self_name="$(basename $0)"
 sed="sed"
 
 if [ -z "$1" ]; then
-    echo "usage: $self_name filename (where filename is in format \"name url(\n)name url\")"
+    echo "usage: $self_name filename [branchname]"
+    echo "  filename - where filename is in format \"name url(\n)name url\""
+    echo "  branchname - name of branch to merge (default \"master\")"
     exit 99
 fi
 
@@ -23,6 +25,7 @@ fi
 
 data_file="$1"
 name_urls="$(cat $data_file)"
+branch_name="${2:-master}"
 repo_name=
 repo_url=
 
@@ -40,7 +43,7 @@ function split_line {
     repo_url="${a#* }"
 }
 
-function repo_master_to_subdir {
+function repo_branch_to_subdir {
     git filter-branch -f --index-filter \
         "git ls-files -s | ${sed} \"s|\t\\\"*|&${repo_name}/|\" |
         GIT_INDEX_FILE=\$GIT_INDEX_FILE.new git update-index --index-info &&
@@ -59,12 +62,12 @@ for a in $name_urls; do
     git rm -qrf --ignore-unmatch .
     git remote add "$repo_name" "$repo_url"
     git fetch "$repo_name"
-    git merge "$repo_name/master"
-    repo_master_to_subdir
+    git merge "$repo_name/$branch_name"
+    repo_branch_to_subdir
     git remote remove "$repo_name"
 done
 
-git checkout --orphan master
+git checkout --orphan $branch_name
 git rm -qrf --ignore-unmatch .
 
 for a in $name_urls; do
